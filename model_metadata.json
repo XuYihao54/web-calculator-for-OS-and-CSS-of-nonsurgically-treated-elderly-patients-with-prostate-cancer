@@ -1,0 +1,227 @@
+{
+  "version": "s08-web-v1",
+  "horizon": "8 years from diagnosis",
+  "prediction_context": "Retrospective, after the encoded treatment information and treatment delay are known",
+  "population": "Men aged 65 or older with prostate cancer and no primary-site surgery, within the endpoint-specific modelling selections",
+  "probability_direction": "mortality",
+  "calibration": "sigmoid(intercept + coefficient * p_raw)",
+  "risk_labels": [
+    "Low",
+    "Intermediate",
+    "High"
+  ],
+  "numeric": {
+    "Days to treatment": [
+      0,
+      731
+    ],
+    "PSA value": [
+      0.1,
+      98.0
+    ],
+    "Age": [
+      65,
+      90
+    ]
+  },
+  "endpoints": {
+    "OS": {
+      "model": "OS_model.json",
+      "sha256": "be27522f887ede3dc1a086f2bd9184b5a317faf712b8d9f42a23809134358f19",
+      "legacy_weight_sha256": "6d7f9f4addce11cd8e423e262f8997260bec422e5b099a444a2c260fe10abb07",
+      "parameter_sha256": "5bb031d8c1059280ff801d5a8f01d2b793caaaf7402924cbffda5037989c93ab",
+      "iteration_range": [
+        0,
+        94
+      ],
+      "parameters": {
+        "intercept": -2.8083,
+        "coefficient": 5.1961
+      },
+      "thresholds": [
+        0.3,
+        0.6
+      ],
+      "features": [
+        "Days to treatment",
+        "PSA value",
+        "Age",
+        "Race",
+        "Marital status",
+        "Histological grade",
+        "T stage",
+        "N stage",
+        "Gleason Score",
+        "Radiation",
+        "Chemotherapy",
+        "Bone metastasis",
+        "Liver metastasis",
+        "Lung metastasis",
+        "Brain metastasis"
+      ],
+      "categorical": {
+        "Race": {
+          "Black": 1,
+          "Others": 2,
+          "White": 3
+        },
+        "Marital status": {
+          "Married (including common law)": 1,
+          "Unmarried": 2
+        },
+        "Histological grade": {
+          "Grade I&Grade II": 1,
+          "Grade III&Grade IV": 2
+        },
+        "T stage": {
+          "T1": 1,
+          "T2": 2,
+          "T3": 3,
+          "T4": 4,
+          "TX": 5
+        },
+        "N stage": {
+          "N0": 1,
+          "N1": 2,
+          "NX": 3
+        },
+        "Gleason Score": {
+          "≤6": 1,
+          "≥9": 2,
+          "7": 3,
+          "8": 4
+        },
+        "Radiation": {
+          "No/Unknown": 1,
+          "Yes": 2
+        },
+        "Chemotherapy": {
+          "No/Unknown": 1,
+          "Yes": 2
+        },
+        "Bone metastasis": {
+          "No": 1,
+          "Yes": 2
+        },
+        "Liver metastasis": {
+          "No": 1,
+          "Yes": 2
+        },
+        "Lung metastasis": {
+          "No": 1,
+          "Yes": 2
+        },
+        "Brain metastasis": {
+          "No": 1,
+          "Yes": 2
+        }
+      },
+      "aliases": {},
+      "population_note": "Selected overall-mortality binary cohort"
+    },
+    "CSS": {
+      "model": "CSS_model.json",
+      "sha256": "510971355b70e185f7152d9aa0b9043bc116f4082ebb3c5c1efc581f244aaef3",
+      "legacy_weight_sha256": "439c6a7242c4dd63e2c4a989d7eb8c746d2f82a85f2ca3a38295988bdf153dce",
+      "parameter_sha256": "4d576f0202365719b10711e0e54d582cc5fb9bcb1bd35a0d4c48fd8f65faddd6",
+      "iteration_range": [
+        0,
+        82
+      ],
+      "parameters": {
+        "intercept": -4.3762,
+        "coefficient": 6.3203
+      },
+      "thresholds": [
+        0.2,
+        0.5
+      ],
+      "features": [
+        "Days to treatment",
+        "PSA value",
+        "Age",
+        "Race",
+        "Marital status",
+        "Histological grade",
+        "T stage",
+        "N stage",
+        "Gleason Score",
+        "Radiation",
+        "Chemotherapy",
+        "Bone metastasis",
+        "Liver metastasis",
+        "Lung metastasis",
+        "Brain metastasis"
+      ],
+      "categorical": {
+        "Race": {
+          "Black": 1,
+          "OTHERS": 2,
+          "White": 3
+        },
+        "Marital status": {
+          "Married (including common law)": 1,
+          "unmarried": 2
+        },
+        "Histological grade": {
+          "Grade I&Grade II": 1,
+          "Grade III&Grade IV": 2
+        },
+        "T stage": {
+          "T1": 1,
+          "T2": 2,
+          "T3": 3,
+          "T4": 4,
+          "TX": 5
+        },
+        "N stage": {
+          "N0": 1,
+          "N1": 2,
+          "NX": 3
+        },
+        "Gleason Score": {
+          "≤6": 1,
+          "≥9": 2,
+          "7": 3,
+          "8": 4
+        },
+        "Radiation": {
+          "None/Unknown": 1,
+          "Yes": 2
+        },
+        "Chemotherapy": {
+          "No/Unknown": 1,
+          "Yes": 2
+        },
+        "Bone metastasis": {
+          "No": 1,
+          "Yes": 2
+        },
+        "Liver metastasis": {
+          "No": 1,
+          "Yes": 2
+        },
+        "Lung metastasis": {
+          "No": 1,
+          "Yes": 2
+        },
+        "Brain metastasis": {
+          "No": 1,
+          "Yes": 2
+        }
+      },
+      "aliases": {
+        "Race": {
+          "Others": "OTHERS"
+        },
+        "Marital status": {
+          "Unmarried": "unmarried"
+        },
+        "Radiation": {
+          "No/Unknown": "None/Unknown"
+        }
+      },
+      "population_note": "Selected cancer-specific binary cohort with deaths from other causes excluded"
+    }
+  }
+}
