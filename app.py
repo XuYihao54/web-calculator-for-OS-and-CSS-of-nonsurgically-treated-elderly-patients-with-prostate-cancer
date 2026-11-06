@@ -57,7 +57,7 @@ with st.form("patient_inputs"):
                     categories = metadata["endpoints"]["OS"]["categorical"][name]
                     fields[name] = st.selectbox(name, list(categories), index=None, help=helpers.get(name))
     confirmed = st.checkbox(
-        "I confirm that the record is for a man aged 65 or older at diagnosis with prostate cancer "
+        "I confirm that the patient is a man aged 65 or older at diagnosis with prostate cancer "
         "and no primary-site surgery, and that the treatment fields and delay are available as recorded."
     )
     submitted = st.form_submit_button("Calculate 8-year mortality probabilities", type="primary")
@@ -76,8 +76,8 @@ if submitted:
         st.stop()
     st.header("Research prototype results")
     labels = {
-        "OS": ("All-cause mortality", "Overall survival in the selected OS cohort"),
-        "CSS": ("Prostate cancer mortality label", "Probability of the negative CSS label (1 − p)"),
+        "OS": ("8-year all-cause mortality", "8-year overall survival"),
+        "CSS": ("8-year prostate cancer mortality", "8-year probability of no prostate cancer death (1 − p)"),
     }
     for column, endpoint in zip(st.columns(2), ENDPOINTS):
         result = results[endpoint]
@@ -96,4 +96,4 @@ if submitted:
         "Risk strata use the unrounded mortality probability and prespecified cutoffs "
         "(OS 30% and 60%, CSS 20% and 50%). They describe model predictions."
     )
-st.caption(f"Version {metadata['version']}")
+
