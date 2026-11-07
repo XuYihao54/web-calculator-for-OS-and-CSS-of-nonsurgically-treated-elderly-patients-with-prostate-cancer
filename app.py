@@ -6,17 +6,8 @@ from calculator import ENDPOINTS, load_models, predict
 
 st.set_page_config(page_title="8-year prostate cancer prediction", layout="wide")
 st.title("8-year prostate cancer prediction")
-st.subheader("Research prototype")
-st.markdown(
-    "For retrospective research in men aged 65 or older with prostate cancer "
-    "and no surgery at the primary site. The 8-year target starts at diagnosis. "
-    "Use recorded treatment information and a known diagnosis-to-treatment interval."
-)
-st.caption("Changing a treatment input changes the model prediction; it does not estimate treatment benefit.")
-st.caption(
-    "Before clinical use, evaluate discrimination and calibration in an independent "
-    "target population and recalibrate if needed."
-)
+st.subheader("Web-based prognostic calculator")
+st.markdown("For prognostic research in men aged ≥65 years with prostate cancer managed without primary-site surgery. Enter documented clinical and treatment characteristics. The eight-year horizon begins at diagnosis.")
 
 @st.cache_resource
 def load_calculator():
@@ -56,16 +47,9 @@ with st.form("patient_inputs"):
                 else:
                     categories = metadata["endpoints"]["OS"]["categorical"][name]
                     fields[name] = st.selectbox(name, list(categories), index=None, help=helpers.get(name))
-    confirmed = st.checkbox(
-        "I confirm that the patient is a man aged 65 or older at diagnosis with prostate cancer "
-        "and no primary-site surgery, and that the treatment fields and delay are available as recorded."
-    )
     submitted = st.form_submit_button("Calculate 8-year mortality probabilities", type="primary")
 
 if submitted:
-    if not confirmed:
-        st.error("Confirm population eligibility and availability of treatment information.")
-        st.stop()
     try:
         results = predict(fields, metadata, models)
     except ValueError as error:
@@ -74,10 +58,10 @@ if submitted:
     except XGBoostError:
         st.error("The model could not calculate the prediction. Check the calculator installation.")
         st.stop()
-    st.header("Research prototype results")
+    st.header("8-year prognosis")
     labels = {
-        "OS": ("8-year all-cause mortality", "8-year overall survival"),
-        "CSS": ("8-year prostate cancer mortality", "8-year probability of no prostate cancer death (1 − p)"),
+        "OS": ("8-year all-cause mortality (p)", "8-year overall survival (1 − p)"),
+        "CSS": ("8-year prostate cancer mortality (p)", "8-year cancer-specific survival (1 − p)"),
     }
     for column, endpoint in zip(st.columns(2), ENDPOINTS):
         result = results[endpoint]
@@ -89,8 +73,8 @@ if submitted:
             st.markdown(f"**Risk stratum: {result['risk']}**")
             if endpoint == "CSS":
                 st.caption(
-                    "These probabilities describe the selected binary CSS cohort, which excluded "
-                    "deaths from other causes within 8 years. The CSS output is specific to that cohort."
+                    "The CSS estimates are conditional on the binary cohort definition, which excluded "
+                    "deaths from other causes within eight years."
                 )
     st.caption(
         "Risk strata use the unrounded mortality probability and prespecified cutoffs "
